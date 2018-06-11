@@ -12,7 +12,7 @@ Issuer is a simple project to sync issues with Github through its Webhook
 
 * List all issues from database
 * Find a issue in database
-* Save a issue in database
+* Save a issue in database (developing)
 
 ## Installation
 
