@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//Routes onde estao as rotas
+//Routes api routes
 func Routes() {
 	router := mux.NewRouter()
 	router.HandleFunc("/issue", controller.GetIssues).Methods("GET")
