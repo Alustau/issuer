@@ -22,7 +22,7 @@ func GetIssues(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(issues)
 }
 
-//FindIssue return all issues
+//FindIssue find a issue in database
 func FindIssue(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
