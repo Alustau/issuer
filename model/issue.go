@@ -30,3 +30,21 @@ func (issue *Issue) GetAll() (issues []Issue, err error) {
 
 	return
 }
+
+//Find add a issue in database
+func (issue *Issue) Find(id int) (row Issue, err error) {
+	db, err := database.GetConnection()
+	if err != nil {
+		log.Println("[issue.GetAll] Error connection: ", err.Error())
+		return
+	}
+
+	db.Get(&row, "select * from issue where id = ?", id)
+
+	if err != nil {
+		log.Println("[issue.GetAll] Error connection: ", err.Error())
+		return
+	}
+
+	return
+}

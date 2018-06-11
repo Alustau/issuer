@@ -11,7 +11,8 @@ import (
 //Routes onde estao as rotas
 func Routes() {
 	router := mux.NewRouter()
-	router.HandleFunc("/issues", controller.GetIssue).Methods("GET")
+	router.HandleFunc("/issue", controller.GetIssues).Methods("GET")
+	router.HandleFunc("/issue/{id}", controller.FindIssue).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
