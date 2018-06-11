@@ -33,9 +33,9 @@ $ go install
 5- Boot the app:
 ```shell
 $ issuer
-
-7- Go to http://0.0.0.0:8000/issue or http://0.0.0.0:8000/issue/1 
+```
+6- Go to http://0.0.0.0:8000/issue or http://0.0.0.0:8000/issue/1 
 
 ## Testing
 
-[developing..]
+Developing...
