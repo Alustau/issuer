@@ -34,7 +34,11 @@ $ go install
 ```shell
 $ issuer
 ```
-6- Go to http://0.0.0.0:8000/issue or http://0.0.0.0:8000/issue/1 
+6- You can also boot the app change config database:
+```shell
+$ issuer --database=issuer2
+```
+7- Go to http://0.0.0.0:8000/issue or http://0.0.0.0:8000/issue/1 
 
 ## Testing
 
