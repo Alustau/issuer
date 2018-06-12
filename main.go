@@ -35,11 +35,11 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 
-	flag.StringVar(&dbHost, "localhost", os.Getenv("DB_HOST"), "database host")
-	flag.StringVar(&dbPort, "3306", os.Getenv("DB_PORT"), "database port")
-	flag.StringVar(&dbname, "issuer", os.Getenv("DB_DATABASE"), "database name")
-	flag.StringVar(&dbUsername, "root", os.Getenv("DB_USER"), "database user")
-	flag.StringVar(&dbPassword, "", os.Getenv("DB_PASSWORD"), "database password")
+	flag.StringVar(&dbHost, "host", os.Getenv("DB_HOST"), "database host")
+	flag.StringVar(&dbPort, "port", os.Getenv("DB_PORT"), "database port")
+	flag.StringVar(&dbname, "database", os.Getenv("DB_DATABASE"), "database name")
+	flag.StringVar(&dbUsername, "user", os.Getenv("DB_USER"), "database user")
+	flag.StringVar(&dbPassword, "password", os.Getenv("DB_PASSWORD"), "database password")
 }
 
 func main() {
