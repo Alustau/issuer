@@ -11,9 +11,8 @@ import (
 )
 
 //GetIssues return all issues
-func GetIssues(w http.ResponseWriter, r *http.Request) {
-	issue := model.Issue{}
-	issues, err := issue.GetAll()
+func (c *Controller) GetIssues(w http.ResponseWriter, r *http.Request) {
+	issues, err := model.GetAllIssues(c.DB)
 
 	if err != nil {
 		log.Println("[IssueController@GetIssues] ", err.Error())
@@ -23,11 +22,11 @@ func GetIssues(w http.ResponseWriter, r *http.Request) {
 }
 
 //FindIssue find a issue in database
-func FindIssue(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) FindIssue(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
-	issue := model.Issue{}
-	issues, err := issue.Find(id)
+
+	issues, err := model.FindIssue(c.DB, id)
 
 	if err != nil {
 		log.Println("[IssueController@GetIssues] ", err.Error())

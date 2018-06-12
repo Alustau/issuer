@@ -14,37 +14,37 @@ type Issue struct {
 }
 
 //GetAll add a issue in database
-func (issue *Issue) GetAll() (issues []Issue, err error) {
-	db, err := database.GetConnection()
-	if err != nil {
-		log.Println("[issue.GetAll] Error connection: ", err.Error())
-		return
-	}
+func (issue *Issue) all(c *database.Connection) (issues []Issue, err error) {
+	sql := "select * from issue"
 
-	db.Select(&issues, "select * from issue")
-
-	if err != nil {
-		log.Println("[issue.GetAll] Error connection: ", err.Error())
-		return
+	if err := c.DB.Select(&issues, sql); err != nil {
+		log.Println("[issue.all] Error when trying get all issues: ", err.Error())
 	}
 
 	return
 }
 
 //Find add a issue in database
-func (issue *Issue) Find(id int) (row Issue, err error) {
-	db, err := database.GetConnection()
-	if err != nil {
-		log.Println("[issue.GetAll] Error connection: ", err.Error())
-		return
-	}
+func (issue *Issue) find(c *database.Connection, id int) (row Issue, err error) {
+	sql := "select * from issue where id = ?"
 
-	db.Get(&row, "select * from issue where id = ?", id)
-
-	if err != nil {
-		log.Println("[issue.GetAll] Error connection: ", err.Error())
-		return
+	if err := c.DB.Get(&row, sql, id); err != nil {
+		log.Println("[issue.find] Error when trying find a issue: ", err.Error())
 	}
 
 	return
+}
+
+//GetAllIssues ...
+func GetAllIssues(c *database.Connection) ([]Issue, error) {
+	issue := &Issue{}
+
+	return issue.all(c)
+}
+
+//GetAllIssues ...
+func FindIssue(c *database.Connection, id int) (Issue, error) {
+	issue := &Issue{}
+
+	return issue.find(c, id)
 }
