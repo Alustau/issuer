@@ -43,16 +43,18 @@ func (c *Controller) SaveIssue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := new(request.IssueRequest)
+	issueRequest := &request.Issue{}
 
-	if err := json.NewDecoder(r.Body).Decode(&params); err != nil {
-		log.Println("[IssueController@SaveIssue] Decoder: ", err.Error())
+	if err := json.NewDecoder(r.Body).Decode(&issueRequest); err != nil {
+		log.Println("[IssueController@SaveIssue] Decoder: ", err)
 		return
 	}
 
-	if _, err := model.InsertIssue(c.DB, params); err != nil {
+	_, err := model.NewIssue(c.DB, issueRequest)
+
+	if err != nil {
 		log.Println("[IssueController@SaveIssue]", err)
 	}
 
-	json.NewEncoder(w).Encode(params)
+	json.NewEncoder(w).Encode("Issue saved with success")
 }

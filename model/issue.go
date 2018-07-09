@@ -40,11 +40,11 @@ func (issue *Issue) find(c *database.Connection, id int) (issues []Issue, err er
 }
 
 func (issue *Issue) insert(c *database.Connection) (int64, error) {
-	sql := "insert into issue (number, issue, action) values (?, ?, ?)"
-	result, err := c.DB.Exec(sql, issue.Number, issue.Issue, issue.Action)
+	sql := "insert into issue (number, issue, action, labels) values (?, ?, ?, ?)"
+	result, err := c.DB.Exec(sql, issue.Number, issue.Issue, issue.Action, issue.Labels)
 
 	if err != nil {
-		log.Println("[model.Issue.insert] ", err.Error())
+		log.Println("[model.Issue.insert] - ", err.Error())
 		return 0, err
 	}
 
@@ -72,32 +72,25 @@ func FindIssue(c *database.Connection, id int) ([]Issue, error) {
 	return issue.find(c, id)
 }
 
-//InsertIssue ...
-func InsertIssue(c *database.Connection, params *request.IssueRequest) (bool, error) {
-	issue := &Issue{}
-
+//NewIssue ...
+func NewIssue(c *database.Connection, params *request.Issue) (*Issue, error) {
 	bytesIssue, err := json.Marshal(params.Issue)
+	byteslabels, err := json.Marshal(params.Issue["labels"])
 
 	if err != nil {
-		log.Println("[model.InsertIssue] json.Marshal(params.Issue) ", err.Error())
-		return false, err
+		log.Println("[model.NewIssue] json.Marshal(params.Issue)", err.Error())
+		return nil, err
 	}
 
-	bytesLabels, err := json.Marshal(params.Issue.Labels)
-
-	if err != nil {
-		log.Println("[model.InsertIssue] json.Marshal(params.Issue.Labels)", err.Error())
-		return false, err
-	}
-
+	issue := &Issue{}
+	issue.Number = params.Issue["number"].(int)
 	issue.Action = params.Action
-	issue.Labels = string(bytesLabels)
 	issue.Issue = string(bytesIssue)
-	issue.Number = params.Issue.Number
+	issue.Labels = string(byteslabels)
 
 	if _, err := issue.insert(c); err != nil {
-		return true, err
+		return nil, err
 	}
 
-	return true, nil
+	return issue, nil
 }
